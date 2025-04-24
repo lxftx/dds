@@ -1,0 +1,13 @@
+FROM python:3.13.0-alpine3.20
+
+COPY requirements.txt /temp/requirements.txt
+COPY ../dds_service /dds_service
+
+WORKDIR /dds_service
+
+RUN apk add postgresql-client build-base postgresql-dev
+
+RUN pip install -r /temp/requirements.txt
+
+RUN adduser --disabled-password data-user
+USER data-user
