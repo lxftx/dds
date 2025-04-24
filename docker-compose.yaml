@@ -1,0 +1,36 @@
+services:
+
+  dds_service:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: ddsservice
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./dds_service:/dds_service
+    depends_on:
+      - dds_database
+    command: >
+      sh -c "
+      python dds_service/wait_for_db.py &&
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - .env
+
+  dds_database:
+    image: postgres:17.1-alpine3.20
+    container_name: dds_database
+    environment:
+      - POSTGRES_DB=${DDS_DB_NAME}
+      - POSTGRES_USER=${DDS_DB_USER}
+      - POSTGRES_PASSWORD=${DDS_DB_PASS}
+    volumes:
+      - dds_db_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+
+volumes:
+  dds_db_data:
