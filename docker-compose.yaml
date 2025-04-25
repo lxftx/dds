@@ -1,10 +1,9 @@
 services:
-
   dds_service:
     build:
-      context: ..
-      dockerfile: Dockerfile
-    container_name: ddsservice
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: dds_service
     ports:
       - "8000:8000"
     volumes:
@@ -19,6 +18,16 @@ services:
       python manage.py runserver 0.0.0.0:8000"
     env_file:
       - .env
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    container_name: react-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - dds_service
 
   dds_database:
     image: postgres:17.1-alpine3.20

@@ -1,7 +1,7 @@
 FROM python:3.13.0-alpine3.20
 
 COPY requirements.txt /temp/requirements.txt
-COPY ../dds_service /dds_service
+COPY ./dds_service /dds_service
 
 WORKDIR /dds_service
 
