@@ -1,5 +1,6 @@
 from drf_yasg.utils import swagger_auto_schema
 
+from cash.filters import CashFlowRecordFilter
 from cash.models import (CashFlowRecord, Category, OperationType, Status,
                          SubCategory)
 from cash.serializers import (CashFlowRecordSerializer, CategorySerializer,
@@ -32,3 +33,4 @@ class CashFlowRecordViewSet(viewsets.ModelViewSet):
     """API endpoint позволяющая просматривать или редактировать `движение средств`."""
     queryset = CashFlowRecord.objects.all()
     serializer_class = CashFlowRecordSerializer
+    filterset_class = CashFlowRecordFilter
