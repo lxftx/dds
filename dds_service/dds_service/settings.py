@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     # module
     'rest_framework',
     'drf_yasg',
+    'django_filters',
     # apps
     'cash',
 ]
@@ -220,3 +221,7 @@ logging.config.dictConfig(LOGGING)
 
 BASE_LOGGER = logging.getLogger("base_logger")
 ERROR_LOGGER = logging.getLogger("error_logger")
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+}
